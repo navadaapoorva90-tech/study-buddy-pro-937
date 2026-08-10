@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDeadlinesRouteImport } from './routes/_authenticated/deadlines'
+import { Route as AuthenticatedNotesRouteImport } from './routes/_authenticated/notes'
 import { Route as AuthenticatedPlannerRouteImport } from './routes/_authenticated/planner'
 import { Route as AuthenticatedSubjectsRouteImport } from './routes/_authenticated/subjects'
 import { Route as AuthenticatedTimetableRouteImport } from './routes/_authenticated/timetable'
@@ -42,6 +43,11 @@ const AuthenticatedDeadlinesRoute = AuthenticatedDeadlinesRouteImport.update({
   path: '/deadlines',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedNotesRoute = AuthenticatedNotesRouteImport.update({
+  id: '/notes',
+  path: '/notes',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedPlannerRoute = AuthenticatedPlannerRouteImport.update({
   id: '/planner',
   path: '/planner',
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/deadlines': typeof AuthenticatedDeadlinesRoute
+  '/notes': typeof AuthenticatedNotesRoute
   '/planner': typeof AuthenticatedPlannerRoute
   '/subjects': typeof AuthenticatedSubjectsRoute
   '/timetable': typeof AuthenticatedTimetableRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/deadlines': typeof AuthenticatedDeadlinesRoute
+  '/notes': typeof AuthenticatedNotesRoute
   '/planner': typeof AuthenticatedPlannerRoute
   '/subjects': typeof AuthenticatedSubjectsRoute
   '/timetable': typeof AuthenticatedTimetableRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/deadlines': typeof AuthenticatedDeadlinesRoute
+  '/_authenticated/notes': typeof AuthenticatedNotesRoute
   '/_authenticated/planner': typeof AuthenticatedPlannerRoute
   '/_authenticated/subjects': typeof AuthenticatedSubjectsRoute
   '/_authenticated/timetable': typeof AuthenticatedTimetableRoute
@@ -94,6 +103,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/deadlines'
+    | '/notes'
     | '/planner'
     | '/subjects'
     | '/timetable'
@@ -103,6 +113,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/deadlines'
+    | '/notes'
     | '/planner'
     | '/subjects'
     | '/timetable'
@@ -113,6 +124,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/dashboard'
     | '/_authenticated/deadlines'
+    | '/_authenticated/notes'
     | '/_authenticated/planner'
     | '/_authenticated/subjects'
     | '/_authenticated/timetable'
@@ -161,6 +173,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDeadlinesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/notes': {
+      id: '/_authenticated/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof AuthenticatedNotesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/planner': {
       id: '/_authenticated/planner'
       path: '/planner'
@@ -188,6 +207,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDeadlinesRoute: typeof AuthenticatedDeadlinesRoute
+  AuthenticatedNotesRoute: typeof AuthenticatedNotesRoute
   AuthenticatedPlannerRoute: typeof AuthenticatedPlannerRoute
   AuthenticatedSubjectsRoute: typeof AuthenticatedSubjectsRoute
   AuthenticatedTimetableRoute: typeof AuthenticatedTimetableRoute
@@ -196,6 +216,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDeadlinesRoute: AuthenticatedDeadlinesRoute,
+  AuthenticatedNotesRoute: AuthenticatedNotesRoute,
   AuthenticatedPlannerRoute: AuthenticatedPlannerRoute,
   AuthenticatedSubjectsRoute: AuthenticatedSubjectsRoute,
   AuthenticatedTimetableRoute: AuthenticatedTimetableRoute,
