@@ -106,8 +106,14 @@ function TimetablePage() {
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!form.title.trim()) return toast.error("Class title is required");
-    if (form.end_time <= form.start_time) return toast.error("End time must be after start time");
+    if (!form.title.trim()) {
+      toast.error("Class title is required");
+      return;
+    }
+    if (form.end_time <= form.start_time) {
+      toast.error("End time must be after start time");
+      return;
+    }
     await save.mutateAsync({
       id: editing?.id,
       values: {
