@@ -113,7 +113,7 @@ export function useSaveRecord(table: TableName, label: string) {
   const { user } = useAuth();
 
   return useMutation({
-    mutationFn: async ({ id, values }: { id?: string; values: Record<string, unknown> }) => {
+    mutationFn: async ({ id, values }: { id?: string | undefined; values: Record<string, unknown> }) => {
       if (id) {
         const { error } = await supabase
           .from(table)
