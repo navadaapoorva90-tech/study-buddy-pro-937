@@ -115,11 +115,16 @@ export function useSaveRecord(table: TableName, label: string) {
   return useMutation({
     mutationFn: async ({ id, values }: { id?: string; values: Record<string, unknown> }) => {
       if (id) {
-        const { error } = await supabase.from(table).update(values).eq("id", id);
+        const { error } = await supabase
+          .from(table)
+          .update(values as never)
+          .eq("id", id);
         if (error) throw error;
         return "updated";
       }
-      const { error } = await supabase.from(table).insert({ ...values, user_id: user!.id } as never);
+      const { error } = await supabase
+        .from(table)
+        .insert({ ...values, user_id: user!.id } as never);
       if (error) throw error;
       return "created";
     },
@@ -148,7 +153,7 @@ export function useDeleteRecord(table: TableName, label: string) {
 }
 
 export function formatTime(value: string) {
-  const [h, m] = value.split(":");
+  const [h, m] = value.split(":") as [string, string];
   const hour = Number(h);
   const suffix = hour >= 12 ? "PM" : "AM";
   const display = hour % 12 === 0 ? 12 : hour % 12;
@@ -161,7 +166,7 @@ export function todayISO() {
 }
 
 export function formatDate(value: string) {
-  const [y, m, d] = value.split("-").map(Number);
+  const [y, m, d] = value.split("-").map(Number) as [number, number, number];
   return new Date(y, m - 1, d).toLocaleDateString(undefined, {
     weekday: "short",
     month: "short",
@@ -170,7 +175,7 @@ export function formatDate(value: string) {
 }
 
 export function daysUntil(value: string) {
-  const [y, m, d] = value.split("-").map(Number);
+  const [y, m, d] = value.split("-").map(Number) as [number, number, number];
   const target = new Date(y, m - 1, d).getTime();
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
