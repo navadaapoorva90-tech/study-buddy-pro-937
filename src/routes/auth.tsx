@@ -11,9 +11,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    mode: search["mode"] === "signup" ? ("signup" as const) : ("login" as const),
-  }),
   head: () => ({
     meta: [
       { title: "Sign in — StudyMate" },
@@ -35,10 +32,9 @@ const schema = z.object({
 });
 
 function AuthPage() {
-  const { mode } = Route.useSearch();
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
-  const isSignup = mode === "signup";
+  const [isSignup, setIsSignup] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -159,7 +155,7 @@ function AuthPage() {
                 className="mt-4 w-full"
                 onClick={() => {
                   setEmailSent(false);
-                  navigate({ to: "/auth", search: { mode: "login" } });
+                  setIsSignup(false);
                 }}
               >
                 Back to login
@@ -232,13 +228,13 @@ function AuthPage() {
 
               <p className="mt-6 text-center text-sm text-muted-foreground">
                 {isSignup ? "Already have an account?" : "New to StudyMate?"}{" "}
-                <Link
-                  to="/auth"
-                  search={{ mode: isSignup ? "login" : "signup" }}
+                <button
+                  type="button"
+                  onClick={() => setIsSignup((value) => !value)}
                   className="font-medium text-primary hover:underline"
                 >
                   {isSignup ? "Log in" : "Create one"}
-                </Link>
+                </button>
               </p>
             </>
           )}
